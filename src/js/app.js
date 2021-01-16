@@ -4,6 +4,21 @@ import Cart from './components/Cart.js';
 import Api from './components/Api.js';
 
 const app = {
+  initPages: function(){
+    const thisApp = this;
+
+    thisApp.pages = document.querySelector(select.containerOf.pages).children;
+
+    thisApp.activatePage(thisApp.pages[0].id);
+  },
+  activatePage: function(pageId){
+    const thisApp = this;
+
+    /* add class "activate" to matching pages, remove from non-matching */
+    
+    /* add class "activate" to matching links, remove from non-matching */
+
+  },
   initCart: function () {
     const thisApp = this;
 
@@ -32,6 +47,8 @@ const app = {
   },
   init: function () {
     const thisApp = this;
+
+    thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
   },
