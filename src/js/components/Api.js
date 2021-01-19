@@ -19,6 +19,7 @@ class Api {
       })
       .then(function (parsedResponse) {
         thisApi.data.products = parsedResponse;
+
         app.initMenu();
       });
   }
