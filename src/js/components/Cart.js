@@ -6,6 +6,7 @@ import CartProduct from './CartProduct.js';
 class Cart {
   constructor(element) {
     const thisCart = this;
+    this.api = new Api();
 
     thisCart.products = [];
 
@@ -34,18 +35,18 @@ class Cart {
   initActions() {
     const thisCart = this;
 
-    thisCart.dom.toggleTrigger.addEventListener('click', function () {
+    thisCart.dom.toggleTrigger.addEventListener('click', function() {
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
-    thisCart.dom.productList.addEventListener('updated', function (event) {
+    thisCart.dom.productList.addEventListener('updated', function(event) {
       event.preventDefault();
       thisCart.update();
       thisCart.priceChangeAnimation();
     });
-    thisCart.dom.productList.addEventListener('remove', function (event) {
+    thisCart.dom.productList.addEventListener('remove', function(event) {
       thisCart.remove(event.detail.cartProduct);
     });
-    thisCart.dom.form.addEventListener('submit', function (event) {
+    thisCart.dom.form.addEventListener('submit', function(event) {
       event.preventDefault();
       if (thisCart.cartValidation() == true) {
         thisCart.sendOrder();
@@ -59,7 +60,7 @@ class Cart {
         thisCart.update();
       }
     });
-    thisCart.dom.form.addEventListener('change', function () {
+    thisCart.dom.form.addEventListener('change', function() {
       thisCart.sendValidation();
     });
   }
@@ -110,7 +111,7 @@ class Cart {
   }
   sendOrder() {
     const thisCart = this;
-    const url = settings.db.url + '/' + settings.db.order;
+    const url = settings.db.order;
     const payload = {
       address: thisCart.dom.address.value,
       phone: thisCart.dom.phone.value,
@@ -123,7 +124,7 @@ class Cart {
     for (let prod of thisCart.products) {
       payload.products.push(prod.getData());
     }
-    new Api(url, payload, 'POST');
+    this.api.post(url, payload);
   }
   cartValidation() {
     const thisCart = this;
@@ -155,7 +156,7 @@ class Cart {
     const thisCart = this;
     for (let price of thisCart.dom.priceSum) {
       price.classList.add(classNames.cart.priceAnim);
-      setTimeout(function () { price.classList.remove(classNames.cart.priceAnim); }, 700);
+      setTimeout(function() { price.classList.remove(classNames.cart.priceAnim); }, 700);
     }
   }
 }
