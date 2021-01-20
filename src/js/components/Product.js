@@ -39,7 +39,7 @@ class Product {
     const thisProduct = this;
     /* find the clickable trigger (the element that should react to clicking) */
     /* START: add event listener to clickable trigger on event click */
-    thisProduct.dom.accordionTrigger.addEventListener('click', function (event) {
+    thisProduct.dom.accordionTrigger.addEventListener('click', function(event) {
       /* prevent default action for event */
       event.preventDefault();
       /* find active product (product that has active class) */
@@ -54,18 +54,18 @@ class Product {
   }
   initOrderForm() {
     const thisProduct = this;
-    thisProduct.dom.form.addEventListener('submit', function (event) {
+    thisProduct.dom.form.addEventListener('submit', function(event) {
       event.preventDefault();
       thisProduct.processOrder();
     });
 
     for (let input of thisProduct.dom.formInputs) {
-      input.addEventListener('change', function () {
+      input.addEventListener('change', function() {
         thisProduct.processOrder();
       });
     }
 
-    thisProduct.dom.cartButton.addEventListener('click', function (event) {
+    thisProduct.dom.cartButton.addEventListener('click', function(event) {
       event.preventDefault();
       thisProduct.processOrder();
       thisProduct.addToCart();
@@ -121,7 +121,7 @@ class Product {
   initAmountWidget() {
     const thisProduct = this;
     thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
-    thisProduct.dom.amountWidgetElem.addEventListener('updated', function () {
+    thisProduct.dom.amountWidgetElem.addEventListener('updated', function() {
       thisProduct.processOrder();
     });
   }

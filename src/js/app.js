@@ -5,7 +5,7 @@ import Api from './components/Api.js';
 import Booking from './components/Booking.js';
 
 const app = {
-  initPages: function () {
+  initPages: function() {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
@@ -22,7 +22,7 @@ const app = {
     thisApp.activatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
-      link.addEventListener('click', function (event) {
+      link.addEventListener('click', function(event) {
         const clickedElement = this;
         event.preventDefault();
 
@@ -34,7 +34,7 @@ const app = {
       });
     }
   },
-  activatePage: function (pageId) {
+  activatePage: function(pageId) {
     const thisApp = this;
 
     /* add class "activate" to matching pages, remove from non-matching */
@@ -49,7 +49,7 @@ const app = {
       );
     }
   },
-  initCart: function () {
+  initCart: function() {
     const thisApp = this;
 
     const cartElem = document.querySelector(select.containerOf.cart);
@@ -57,37 +57,42 @@ const app = {
 
     thisApp.productList = document.querySelector(select.containerOf.menu);
 
-    thisApp.productList.addEventListener('add-to-cart', function (event) {
+    thisApp.productList.addEventListener('add-to-cart', function(event) {
       app.cart.add(event.detail.product);
     });
   },
-  initMenu: function () {
+  initMenu: function() {
     const thisApp = this;
 
     for (let productData in thisApp.data.products) {
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
-  initData: function () {
+  initData: function() {
     const thisApp = this;
 
     thisApp.data = {};
 
-    const url = settings.db.url + '/' + settings.db.product;
+    const url = settings.db.product;
 
 
-  
-    new Api(url, thisApp.data, 'GET');
+
+    this.api.get(url).then(function(parsedResponse) {
+      thisApp.data.products = parsedResponse;
+
+      app.initMenu();
+    });
   },
-  initBooking: function () {
+  initBooking: function() {
     const thisApp = this;
 
     thisApp.booking = document.querySelector(select.containerOf.booking);
 
     new Booking(thisApp.booking);
   },
-  init: function () {
+  init: function() {
     const thisApp = this;
+    this.api = new Api();
 
     thisApp.initPages();
     thisApp.initData();
