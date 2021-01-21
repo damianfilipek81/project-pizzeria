@@ -11,13 +11,12 @@ class AmountWidget extends BaseWidget {
     thisWidget.initActions();
     thisWidget.value = settings.amountWidget.defaultValue;
   }
-  getElements(element) {
+  getElements() {
     const thisWidget = this;
-    
-    thisWidget.element = element;
-    thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-    thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-    thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+
+    thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
+    thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
   }
   isValid(value) {
     return !isNaN(value)
