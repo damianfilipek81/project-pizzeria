@@ -159,35 +159,35 @@ class Booking {
 
     thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
-      thisBooking.remove();
-      thisBooking.clickedTableID = null;
+      thisBooking.removeSelectedTable();
+      thisBooking.selectedTableId = null;
     });
     thisBooking.dom.tablesContainer.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.clickedElement = event.target;
-      thisBooking.selected();
+      thisBooking.selectedTable();
     });
     thisBooking.dom.wrapper.addEventListener('submit', function () {
       thisBooking.sendBooking();
     });
   }
-  selected() {
+  selectedTable() {
     const thisBooking = this;
 
     if (thisBooking.clickedElement.classList.contains(classNames.booking.table)
       && !thisBooking.clickedElement.classList.contains(classNames.booking.tableBooked)) {
-      thisBooking.clickedTableID = thisBooking.clickedElement.getAttribute(settings.booking.tableIdAttribute);
+      thisBooking.selectedTableId = thisBooking.clickedElement.getAttribute(settings.booking.tableIdAttribute);
       thisBooking.clickedElement.classList.toggle(classNames.booking.active);
 
       if (thisBooking.clickedElement.classList.contains(classNames.booking.active)) {
-        thisBooking.remove();
+        thisBooking.removeSelectedTable();
         thisBooking.clickedElement.classList.toggle(classNames.booking.active);
       } else if (!thisBooking.clickedElement.classList.contains(classNames.booking.active)) {
-        thisBooking.clickedTableID = null;
+        thisBooking.selectedTableId = null;
       }
     }
   }
-  remove() {
+  removeSelectedTable() {
     const thisBooking = this;
     for (let table of thisBooking.dom.tables) {
       table.classList.remove(classNames.booking.active);
@@ -200,7 +200,7 @@ class Booking {
     const payload = {
       date: thisBooking.datePickerWidget.correctValue,
       hour: thisBooking.hourPickerWidget.correctValue,
-      table: parseInt(thisBooking.clickedTableID),
+      table: parseInt(thisBooking.selectedTableId),
       duration: parseInt(thisBooking.dom.hoursAmountValue.value),
       ppl: parseInt(thisBooking.dom.peopleAmountValue.value),
       starters: [],

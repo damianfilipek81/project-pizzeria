@@ -5,11 +5,12 @@ import Api from './components/Api.js';
 import Booking from './components/Booking.js';
 
 const app = {
-  initPages: function() {
+  initPages: function () {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
+    thisApp.homeLinks = document.querySelector(select.containerOf.imagesLinks).children;
 
     const idFromHash = window.location.hash.replace('#/', '');
     let pageMatchingHash = thisApp.pages[0].id;
@@ -22,7 +23,7 @@ const app = {
     thisApp.activatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
-      link.addEventListener('click', function(event) {
+      link.addEventListener('click', function (event) {
         const clickedElement = this;
         event.preventDefault();
 
@@ -33,8 +34,19 @@ const app = {
         window.location.hash = '#/' + id;
       });
     }
+    for(let link of thisApp.homeLinks){
+      link.addEventListener('click', function(event){
+        const clickedElement = this;
+        event.preventDefault();
+
+        const id = clickedElement.getAttribute('href').replace('#', '');
+        thisApp.activatePage(id);
+
+        window.location.hash = '#/' + id;
+      });
+    }
   },
-  activatePage: function(pageId) {
+  activatePage: function (pageId) {
     const thisApp = this;
 
     /* add class "activate" to matching pages, remove from non-matching */
@@ -49,7 +61,7 @@ const app = {
       );
     }
   },
-  initCart: function() {
+  initCart: function () {
     const thisApp = this;
 
     const cartElem = document.querySelector(select.containerOf.cart);
@@ -57,18 +69,18 @@ const app = {
 
     thisApp.productList = document.querySelector(select.containerOf.menu);
 
-    thisApp.productList.addEventListener('add-to-cart', function(event) {
+    thisApp.productList.addEventListener('add-to-cart', function (event) {
       app.cart.add(event.detail.product);
     });
   },
-  initMenu: function() {
+  initMenu: function () {
     const thisApp = this;
 
     for (let productData in thisApp.data.products) {
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
-  initData: function() {
+  initData: function () {
     const thisApp = this;
 
     thisApp.data = {};
@@ -77,20 +89,20 @@ const app = {
 
 
 
-    this.api.get(url).then(function(parsedResponse) {
+    this.api.get(url).then(function (parsedResponse) {
       thisApp.data.products = parsedResponse;
 
       app.initMenu();
     });
   },
-  initBooking: function() {
+  initBooking: function () {
     const thisApp = this;
 
     thisApp.booking = document.querySelector(select.containerOf.booking);
 
     new Booking(thisApp.booking);
   },
-  init: function() {
+  init: function () {
     const thisApp = this;
     this.api = new Api();
 
