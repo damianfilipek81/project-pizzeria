@@ -1,5 +1,5 @@
 import { settings, select, classNames, templates } from './../settings.js';
-import Api from './api.js';
+import Api from './Api.js';
 import utils from './../utils.js';
 import CartProduct from './CartProduct.js';
 
