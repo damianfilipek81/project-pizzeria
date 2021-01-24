@@ -17,7 +17,7 @@ class BaseWidget {
 
     const newValue = thisWidget.parseValue(value);
 
-    if (thisWidget.correctValue !== newValue && thisWidget.isValid(newValue)) {
+    if (thisWidget.correctValue != newValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
       thisWidget.announce();
     }
@@ -37,7 +37,6 @@ class BaseWidget {
   }
   renderValue() {
     const thisWidget = this;
-    
     thisWidget.dom.input.value.innerHTML = thisWidget.value;
   }
   announce() {
