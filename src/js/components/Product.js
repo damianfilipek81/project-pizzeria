@@ -8,6 +8,7 @@ class Product {
     const thisProduct = this;
     thisProduct.id = id;
     thisProduct.data = data;
+    
     thisProduct.renderInMenu();
     thisProduct.getElements();
     thisProduct.initAccordion();
